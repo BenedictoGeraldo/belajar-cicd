@@ -21,7 +21,6 @@ RUN docker-php-ext-install pdo pdo_mysql bcmath
 # Salin file dependensi (vendor) dari tahap "vendor"
 COPY --from=vendor /app/vendor/ ./vendor/
 
-# Salin sisa kode aplikasi dari tahap "vendor" juga
 # Ini memastikan kita mendapatkan file yang "bersih" dari build stage
 COPY --from=vendor /app/ .
 
