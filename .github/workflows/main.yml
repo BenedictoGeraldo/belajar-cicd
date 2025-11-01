@@ -1,0 +1,34 @@
+name: CI/CD Pipeline Laravel
+
+# 1. TENTUKAN TRIGGER
+# Pipeline ini akan berjalan setiap kali ada 'push' ke branch 'main'
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # 2. DEFINISIKAN JOB (PEKERJAAN)
+  build-and-push-docker:
+    # Menggunakan OS Ubuntu terbaru
+    runs-on: ubuntu-latest
+
+    steps:
+      # Langkah 1: Checkout (mengunduh) kode dari repo Anda
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Langkah 2: Login ke Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Langkah 3: Build dan Push image ke Docker Hub
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .         # Gunakan root folder sebagai build context
+          file: ./Dockerfile # Tunjuk ke Dockerfile yang kita buat
+          push: true         # 'true' untuk push setelah build
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/belajar-cicd:latest
