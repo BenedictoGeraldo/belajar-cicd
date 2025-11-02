@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Langkah 1: Checkout (mengunduh) kode dari repo Anda
+      # Langkah 1: Checkout (mengunduh) kode dari repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .         # Gunakan root folder sebagai build context
-          file: ./Dockerfile # Tunjuk ke Dockerfile yang kita buat
-          push: true         # 'true' untuk push setelah build
+          context: .         
+          file: ./Dockerfile 
+          push: true         
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/belajar-cicd:latest
